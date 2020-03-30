@@ -1,0 +1,8 @@
+﻿<div style="width: 100%; height: 100%; display: grid; grid-template-rows: auto 1fr auto;">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

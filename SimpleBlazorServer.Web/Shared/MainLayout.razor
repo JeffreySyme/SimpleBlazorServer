@@ -1,0 +1,57 @@
+﻿@inherits LayoutComponentBase
+@implements IDisposable
+@inject ISnackbarService SnackbarService
+@using SimpleBlazorServer.Web.Services
+
+<div style="display:grid; grid-template-columns: auto 1fr; width: 100%; height: 100%;">
+    <Sidebar>
+        <SidebarContent>
+            <SidebarBrand>
+                <a href="/">IGS | Blazor Template</a>
+            </SidebarBrand>
+            <SidebarNavigation>
+                <SidebarItem>
+                    <SidebarLink To="">Home</SidebarLink>
+                </SidebarItem>
+                <SidebarItem>
+                    <SidebarLink To="counter">Counter</SidebarLink>
+                </SidebarItem>
+                <SidebarItem>
+                    <SidebarLink To="weatherforecast">Weather Forecast</SidebarLink>
+                </SidebarItem>
+            </SidebarNavigation>
+        </SidebarContent>
+    </Sidebar>
+    <div style="overflow-y:auto;">
+        @Body
+    </div>
+</div>
+
+<Snackbar @ref="snackbarRef">
+    <SnackbarBody>
+        <Icon Name="@(SnackbarType == SnackbarType.Success ? "fa-check-circle" : SnackbarType == SnackbarType.Error ? "fa-times-circle" : "fa-info")" /> @SnackbarMessage
+    </SnackbarBody>
+</Snackbar>
+
+@code {
+    protected override void OnInitialized()
+    {
+        SnackbarService.OnShow += OnShow;
+    }
+
+    public void Dispose()
+    {
+        SnackbarService.OnShow -= OnShow;
+    }
+
+    public void OnShow(string message, SnackbarType type)
+    {
+        SnackbarType = type;
+        SnackbarMessage = message;
+        snackbarRef.Show();
+    }
+
+    Snackbar snackbarRef;
+    SnackbarType SnackbarType;
+    string SnackbarMessage;
+}

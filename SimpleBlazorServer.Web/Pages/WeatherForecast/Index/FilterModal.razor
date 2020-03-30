@@ -1,0 +1,75 @@
+﻿@inherits ValidationComponent
+@inject IValidator<GetWeatherForecast.Query> Validator
+
+<Modal @ref="modalRef">
+    <ModalBackdrop />
+    <ModalContent>
+        <ModalHeader>
+            <ModalTitle>Weather Forecast Filter</ModalTitle>
+            <CloseButton Clicked="Dismiss" />
+        </ModalHeader>
+        <ModalBody>
+            <Validations @ref="Validations" Mode="ValidationMode">
+                <Field>
+                    <FieldLabel>Weather Forecast ID</FieldLabel>
+                    <FieldBody>
+                        <Validation>
+                            <NumericEdit @bind-Value="Query.WeatherForecastId">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </NumericEdit>
+                        </Validation>
+                    </FieldBody>
+                </Field>
+            </Validations>
+        </ModalBody>
+        <ModalFooter>
+            <Button Color="Color.Secondary" Clicked="ClearFilters">Clear Filters</Button>
+            <Button Color="Color.Primary" Clicked="Close">Filter</Button>
+        </ModalFooter>
+    </ModalContent>
+</Modal>
+
+@code {
+    Modal modalRef;
+
+    GetWeatherForecast.Query Query { get; set; } = new GetWeatherForecast.Query();
+
+    [Parameter]
+    public EventCallback<GetWeatherForecast.Query> OnClose { get; set; } = new EventCallback<GetWeatherForecast.Query>();
+
+    public void ClearFilters()
+    {
+        Query = new GetWeatherForecast.Query();
+    }
+
+    public async void Close()
+    {
+        if (!ValidateAll())
+            return;
+
+        Dismiss();
+
+        await OnClose.InvokeAsync(Query);
+    }
+
+    public void Dismiss()
+    {
+        modalRef.Hide();
+    }
+
+    public void Show(GetWeatherForecast.Query query)
+    {
+        Query = query;
+
+        modalRef.Show();
+    }
+
+    private async Task ValidateField(ValidatorEventArgs args, string fieldName)
+    {
+        var validationResult = await Validator.ValidateAsync(Query, default, fieldName);
+        if (!validationResult.IsValid)
+            SetValidationState(args, validationResult);
+    }
+}

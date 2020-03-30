@@ -1,0 +1,86 @@
+﻿@page "/weatherforecast"
+@inherits QueryListComponent<GetWeatherForecast.Query>
+
+<LayoutContainer>
+    <LayoutHeader>
+        <LayoutHeading>Weather Forecast</LayoutHeading>
+        <Buttons>
+            <Button Color="Color.Secondary" Clicked="ClearFilters">Clear Filters</Button>
+            <Button Color="Color.Primary" Clicked="ShowFilters">Filter</Button>
+        </Buttons>
+    </LayoutHeader>
+    <LayoutBody>
+        @if (Loading)
+        {
+            <Progress>
+                <ProgressBar IsAnimated="true" IsStriped="true" Value="100" />
+            </Progress>
+        }
+        else
+        {
+            <Table IsNarrow="true" IsHoverable="true" IsStriped="true">
+                <TableHeader>
+                    <TableRow>
+                        <TableHeaderCell>ID</TableHeaderCell>
+                        <TableHeaderCell>Date</TableHeaderCell>
+                        <TableHeaderCell>Temp. (C)</TableHeaderCell>
+                        <TableHeaderCell>Temp. (F)</TableHeaderCell>
+                        <TableHeaderCell>Summary</TableHeaderCell>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    @foreach (var forecast in Response.Data)
+                    {
+                        <TableRow>
+                            <TableRowCell>@forecast.WeatherForecastId</TableRowCell>
+                            <TableRowCell>@forecast.Date.ToShortDateString()</TableRowCell>
+                            <TableRowCell>@forecast.TemperatureC</TableRowCell>
+                            <TableRowCell>@forecast.TemperatureF</TableRowCell>
+                            <TableRowCell>@forecast.Summary</TableRowCell>
+                        </TableRow>
+                    }
+                </TableBody>
+            </Table>
+        }
+    </LayoutBody>
+    <LayoutFooter>
+        <Paginator Index="_pageIndex" PageSize="_pageSize" Length="Response.TotalCount" Page="OnPage" />
+    </LayoutFooter>
+</LayoutContainer>
+
+<FilterModal @ref="modalRef" OnClose="NavigationManager.SetQueryString" />
+
+@code {
+    FilterModal modalRef;
+
+    public bool Loading { get; set; }
+
+    public GetWeatherForecast.Response Response { get; set; } = new GetWeatherForecast.Response();
+
+    public void ClearFilters()
+    {
+        var query = new GetWeatherForecast.Query();
+        SetQuery(query);
+    }
+
+    public void OnPage(int index)
+    {
+        var query = GetQuery();
+        query.Skip = index * query.Take;
+        SetQuery(query);
+    }
+
+    protected override async Task SearchAsync(GetWeatherForecast.Query query)
+    {
+        Loading = true;
+        StateHasChanged();
+        Response = await Mediator.Send(query);
+        Loading = false;
+        StateHasChanged();
+    }
+
+    public void ShowFilters()
+    {
+        modalRef.Show(GetQuery());
+    }
+}

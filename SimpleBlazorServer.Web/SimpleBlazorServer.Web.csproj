@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Blazorise" Version="0.8.8.4" />
+    <PackageReference Include="Blazorise.Bootstrap" Version="0.8.8.4" />
+    <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.8.8.4" />
+    <PackageReference Include="Blazorise.Sidebar" Version="0.8.8.4" />
+    <PackageReference Include="Blazorise.Snackbar" Version="0.8.8.4" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="8.6.2" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleBlazorServer.Commands\SimpleBlazorServer.Commands.csproj" />
+    <ProjectReference Include="..\SimpleBlazorServer.Data\SimpleBlazorServer.Data.csproj" />
+    <ProjectReference Include="..\SimpleBlazorServer.Queries\SimpleBlazorServer.Queries.csproj" />
+    <ProjectReference Include="..\SimpleBlazorServer.Shared\SimpleBlazorServer.Shared.csproj" />
+  </ItemGroup>
+
+</Project>

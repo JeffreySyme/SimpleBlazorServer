@@ -1,0 +1,56 @@
+﻿<div style="display: grid; grid-template-columns: 1fr auto; grid-gap: 12px; align-items: center; justify-content: flex-end;">
+    <div>
+        @($"{(Index == 0 ? 1 : Index * PageSize)} - {PageSize * (Index + 1)} of {Length}")
+    </div>
+    <Pagination>
+        <PaginationItem IsDisabled="IsFirstPage()">
+            <PaginationLink Clicked="Previous">
+                <span aria-hidden="true">«</span>
+            </PaginationLink>
+        </PaginationItem>
+        <PaginationItem IsDisabled="IsLastPage()">
+            <PaginationLink Clicked="Next">
+                <span aria-hidden="true">»</span>
+            </PaginationLink>
+        </PaginationItem>
+    </Pagination>
+</div>
+
+
+@code {
+    [Parameter]
+    public int Index { get; set; }
+
+    [Parameter]
+    public int PageSize { get; set; }
+
+    [Parameter]
+    public int Length { get; set; }
+
+    [Parameter]
+    public EventCallback<int> Page { get; set; } = new EventCallback<int>();
+
+    public async void Next()
+    {
+        await Page.InvokeAsync(Index + 1);
+    }
+
+    public async void Previous()
+    {
+        var index = Index - 1;
+        if (index < 0)
+            index = 0;
+
+        await Page.InvokeAsync(index);
+    }
+
+    public bool IsFirstPage()
+    {
+        return Index <= 0;
+    }
+
+    public bool IsLastPage()
+    {
+        return Index * PageSize >= Length;
+    }
+}

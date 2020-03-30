@@ -1,0 +1,8 @@
+﻿<div style="border-top: 1px solid gray; padding: 0 24px; display: grid; align-items: center; align-content: center; justify-content: flex-end; height: 70px;">
+    @ChildContent
+</div>
+
+@code {
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

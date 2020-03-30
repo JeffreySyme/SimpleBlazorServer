@@ -1,0 +1,38 @@
+﻿@page "/counter"
+@inject IValidator<IncrementCounter.Command> Validator
+@inject ISnackbarService SnackbarService 
+
+<LayoutContainer>
+    <LayoutHeader>
+        <LayoutHeading>Counter</LayoutHeading>
+    </LayoutHeader>
+    <LayoutBody>
+        <Paragraph>Current count: @currentCount</Paragraph>
+
+        <Button Color="Color.Primary" @onclick="IncrementCount">Click me</Button>
+    </LayoutBody>
+</LayoutContainer>
+
+@code {
+    private int currentCount = 0;
+
+    private async void IncrementCount()
+    {
+        var command = new IncrementCounter.Command
+        {
+            Value = currentCount
+        };
+
+        var validationResult = await Validator.ValidateAsync(command);
+
+        if (!validationResult.IsValid)
+        {
+            SnackbarService.Show("The counter valus is invalid");
+            return;
+        }
+
+        var response = await Mediator.Send(command);
+
+        currentCount = response.Value;
+    }
+}
