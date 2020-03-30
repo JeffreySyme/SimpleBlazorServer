@@ -1,0 +1,15 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "syme",
+    "classifications": [ "Web", "Blazor" ], 
+    "name": "Simple Blazor Server",
+    "identity": "Simple.BlazorServer",         
+    "groupIdentity":"Simple.ProjectTemplates.BlazorServer",
+    "shortName": "simpleblazorserver",
+    "tags": {
+      "language": "C#",
+      "type":"project"
+    },
+    "sourceName": "SimpleBlazorServer",
+    "preferNameDirectory": true
+  }
