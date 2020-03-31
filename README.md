@@ -2,7 +2,7 @@
 Simple Blazor Server application with Mediator
 ## Purpose
 This is a .NET Core Template for spinning up a Blazor Server application quickly.
-This project is generic and uses popular .NET libraries to minimize moving parts.
+This project is generic, minimal and uses popular .NET libraries.
 ## Installation
 Clone the repo and run the following command
 ```
