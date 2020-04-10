@@ -29,3 +29,4 @@ The path here must be absolute. There is no support for relative paths when remo
 - [FluentValidation](https://github.com/FluentValidation/FluentValidation)
 - [.NET Blazor](https://dotnet.microsoft.com/apps/aspnet/web-apps/blazor)
 - [Blazorise](https://github.com/stsrki/Blazorise)
+- [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/)
