@@ -22,4 +22,8 @@
     <ProjectReference Include="..\SimpleBlazorServer.Shared\SimpleBlazorServer.Shared.csproj" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <DisableImplicitComponentsAnalyzers>true</DisableImplicitComponentsAnalyzers>
+  </PropertyGroup>
+
 </Project>
