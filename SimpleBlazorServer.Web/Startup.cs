@@ -14,8 +14,6 @@ using AutoMapper;
 using MediatR;
 using FluentValidation;
 using SimpleBlazorServer.Web.Extensions;
-using System;
-using SimpleBlazorServer.Shared.Constants;
 using SimpleBlazorServer.Web.Behaviors;
 
 namespace SimpleBlazorServer.Web

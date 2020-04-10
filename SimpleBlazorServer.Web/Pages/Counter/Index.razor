@@ -1,15 +1,22 @@
 ﻿@page "/counter"
 @inject IValidator<IncrementCounter.Command> Validator
-@inject ISnackbarService SnackbarService 
+@inject ISnackbarService SnackbarService
+
+<style>
+    .counter-body {
+        padding: 24px;
+    }
+</style>
 
 <LayoutContainer>
     <LayoutHeader>
         <LayoutHeading>Counter</LayoutHeading>
     </LayoutHeader>
     <LayoutBody>
-        <Paragraph>Current count: @currentCount</Paragraph>
-
-        <Button Color="Color.Primary" @onclick="IncrementCount">Click me</Button>
+        <div class="counter-body">
+            <Paragraph>Current count: @currentCount</Paragraph>
+            <Button Color="Color.Primary" @onclick="IncrementCount">Click me</Button>    
+        </div>
     </LayoutBody>
 </LayoutContainer>
 
