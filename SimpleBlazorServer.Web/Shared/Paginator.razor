@@ -51,6 +51,6 @@
 
     public bool IsLastPage()
     {
-        return Index * PageSize >= Length;
+        return (Index + 1) * PageSize >= Length;
     }
 }
