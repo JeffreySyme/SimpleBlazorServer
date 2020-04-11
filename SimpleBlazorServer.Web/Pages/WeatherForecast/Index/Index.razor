@@ -65,6 +65,7 @@
 
     public void OnPage(int index)
     {
+        _pageIndex = index;
         var query = GetQuery();
         query.Skip = index * query.Take;
         SetQuery(query);
