@@ -28,11 +28,16 @@
     public int Length { get; set; }
 
     [Parameter]
-    public EventCallback<int> Page { get; set; } = new EventCallback<int>();
+    public EventCallback<PageEvent> Page { get; set; } = new EventCallback<PageEvent>();
 
     public async void Next()
     {
-        await Page.InvokeAsync(Index + 1);
+        await Page.InvokeAsync(new PageEvent
+        {
+            Length = Length,
+            PageSize = PageSize,
+            PageIndex = Index + 1
+        });
     }
 
     public async void Previous()
@@ -41,7 +46,12 @@
         if (index < 0)
             index = 0;
 
-        await Page.InvokeAsync(index);
+        await Page.InvokeAsync(new PageEvent
+        {
+            Length = Length,
+            PageSize = PageSize,
+            PageIndex = index
+        });
     }
 
     public bool IsFirstPage()

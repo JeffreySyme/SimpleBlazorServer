@@ -63,11 +63,11 @@
         SetQuery(query);
     }
 
-    public void OnPage(int index)
+    public void OnPage(PageEvent pageEvent)
     {
-        _pageIndex = index;
+        _pageIndex = pageEvent.PageIndex;
         var query = GetQuery();
-        query.Skip = index * query.Take;
+        query.Skip = pageEvent.PageIndex * pageEvent.PageSize;
         SetQuery(query);
     }
 
