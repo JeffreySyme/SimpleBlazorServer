@@ -1,4 +1,15 @@
-﻿<div style="display: grid; grid-template-columns: 1fr auto; grid-gap: 12px; align-items: center; justify-content: flex-end;">
+﻿<div style="display: grid; grid-template-columns: 1fr auto auto; grid-gap: 12px; align-items: center; justify-content: flex-end;">
+    @if(PageSizeOptions.Count() > 0)
+    {
+        <div>
+            <SelectEdit SelectedValue="PageSize" TValue="int" SelectedValueChanged="OnPageSizeChanged">
+                @foreach(var option in PageSizeOptions)
+                {
+                    <SelectItem Value="option">@option</SelectItem>
+                }
+            </SelectEdit>
+        </div>
+    }
     <div>
         @($"{(Index == 0 ? 1 : Index * PageSize)} - {PageSize * (Index + 1)} of {Length}")
     </div>
@@ -28,8 +39,20 @@
     public int Length { get; set; }
 
     [Parameter]
+    public IEnumerable<int> PageSizeOptions { get; set; } = new List<int>();
+
+    [Parameter]
     public EventCallback<PageEvent> Page { get; set; } = new EventCallback<PageEvent>();
 
+    public async void OnPageSizeChanged(int selectedValue)
+    {
+        await Page.InvokeAsync(new PageEvent
+        {
+            Length = Length,
+            PageSize = selectedValue,
+            PageIndex = Index
+        });
+    }
     public async void Next()
     {
         await Page.InvokeAsync(new PageEvent
