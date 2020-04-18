@@ -1,6 +1,7 @@
-﻿<div style="display: grid; grid-template-columns: 1fr auto auto; grid-gap: 12px; align-items: center; justify-content: flex-end;">
+﻿<div style="display: grid; grid-template-columns: 1fr auto auto auto; grid-gap: 12px; align-items: center; justify-content: flex-end;">
     @if(PageSizeOptions.Count() > 0)
     {
+        <span>Items per page: </span>
         <div>
             <SelectEdit SelectedValue="PageSize" TValue="int" SelectedValueChanged="OnPageSizeChanged">
                 @foreach(var option in PageSizeOptions)
