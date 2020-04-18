@@ -6,7 +6,7 @@
         <LayoutHeading>Weather Forecast</LayoutHeading>
         <Buttons>
             <Button Color="Color.Secondary" Clicked="ClearFilters">Clear Filters</Button>
-            <Button Color="Color.Primary" Clicked="ShowFilters">Filter</Button>
+            <Button Color="Color.Primary" Clicked="ShowFilters"><Icon Name="@("fa fa-filter")" /> Filter</Button>
         </Buttons>
     </LayoutHeader>
     <LayoutBody>
@@ -44,7 +44,7 @@
         }
     </LayoutBody>
     <LayoutFooter>
-        <Paginator Index="_pageIndex" PageSize="_pageSize" Length="Response.TotalCount" Page="OnPage" />
+        <Paginator Index="_pageIndex" PageSize="_pageSize" Length="Response.TotalCount" Page="OnPage" PageSizeOptions="@(new[] { 50, 100, 150 })" />
     </LayoutFooter>
 </LayoutContainer>
 
@@ -63,11 +63,13 @@
         SetQuery(query);
     }
 
-    public void OnPage(int index)
+    public void OnPage(PageEvent pageEvent)
     {
-        _pageIndex = index;
+        _pageIndex = pageEvent.PageIndex;
+        _pageSize = pageEvent.PageSize;
         var query = GetQuery();
-        query.Skip = index * query.Take;
+        query.Take = _pageSize;
+        query.Skip = pageEvent.PageIndex * pageEvent.PageSize;
         SetQuery(query);
     }
 
