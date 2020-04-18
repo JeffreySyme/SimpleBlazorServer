@@ -1,15 +1,15 @@
 ﻿@page "/weatherforecast"
 @inherits QueryListComponent<GetWeatherForecast.Query>
 
-<LayoutContainer>
-    <LayoutHeader>
-        <LayoutHeading>Weather Forecast</LayoutHeading>
+<AppLayout>
+    <AppLayoutHeader>
+        <AppLayoutHeading>Weather Forecast</AppLayoutHeading>
         <Buttons>
             <Button Color="Color.Secondary" Clicked="ClearFilters">Clear Filters</Button>
             <Button Color="Color.Primary" Clicked="ShowFilters"><Icon Name="@("fa fa-filter")" /> Filter</Button>
         </Buttons>
-    </LayoutHeader>
-    <LayoutBody>
+    </AppLayoutHeader>
+    <AppLayoutBody>
         @if (Loading)
         {
             <Progress>
@@ -42,11 +42,11 @@
                 </TableBody>
             </Table>
         }
-    </LayoutBody>
-    <LayoutFooter>
+    </AppLayoutBody>
+    <AppLayoutFooter>
         <Paginator Index="_pageIndex" PageSize="_pageSize" Length="Response.TotalCount" Page="OnPage" PageSizeOptions="@(new[] { 50, 100, 150 })" />
-    </LayoutFooter>
-</LayoutContainer>
+    </AppLayoutFooter>
+</AppLayout>
 
 <FilterModal @ref="modalRef" OnClose="NavigationManager.SetQueryString" />
 

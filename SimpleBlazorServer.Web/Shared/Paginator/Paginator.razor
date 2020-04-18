@@ -3,12 +3,12 @@
     {
         <span>Items per page: </span>
         <div>
-            <SelectEdit SelectedValue="PageSize" TValue="int" SelectedValueChanged="OnPageSizeChanged">
+            <Select SelectedValue="PageSize" TValue="int" SelectedValueChanged="OnPageSizeChanged">
                 @foreach(var option in PageSizeOptions)
                 {
                     <SelectItem Value="option">@option</SelectItem>
                 }
-            </SelectEdit>
+            </Select>
         </div>
     }
     <div>
