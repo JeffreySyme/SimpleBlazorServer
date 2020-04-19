@@ -1,5 +1,5 @@
 ﻿<div style="display: grid; grid-template-columns: 1fr auto auto auto; grid-gap: 12px; align-items: center; justify-content: flex-end;">
-    @if(PageSizeOptions.Count() > 0)
+    @if (PageSizeOptions.Count() > 0)
     {
         <span>Items per page: </span>
         <div>
@@ -15,12 +15,12 @@
         @($"{(Index == 0 ? 1 : Index * PageSize)} - {PageSize * (Index + 1)} of {Length}")
     </div>
     <Pagination>
-        <PaginationItem IsDisabled="IsFirstPage()">
+        <PaginationItem Disabled="IsFirstPage">
             <PaginationLink Clicked="Previous">
                 <span aria-hidden="true">«</span>
             </PaginationLink>
         </PaginationItem>
-        <PaginationItem IsDisabled="IsLastPage()">
+        <PaginationItem Disabled="IsLastPage">
             <PaginationLink Clicked="Next">
                 <span aria-hidden="true">»</span>
             </PaginationLink>
@@ -78,13 +78,19 @@
         });
     }
 
-    public bool IsFirstPage()
+    public bool IsFirstPage
     {
-        return Index <= 0;
+        get
+        {
+            return Index <= 0;
+        }
     }
 
-    public bool IsLastPage()
+    public bool IsLastPage
     {
-        return (Index + 1) * PageSize >= Length;
+        get
+        {
+            return (Index + 1) * PageSize >= Length;
+        }
     }
 }
