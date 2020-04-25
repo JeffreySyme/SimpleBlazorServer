@@ -7,6 +7,7 @@ namespace SimpleBlazorServer.Queries.WeatherForecast
         public class Query : BaseQuery, IRequest<Response>
         {
             public int? WeatherForecastId { get; set; }
+            public string Summary { get; set; }
         }
     }
 }
