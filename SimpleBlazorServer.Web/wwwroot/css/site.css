@@ -75,3 +75,15 @@ html, body {
 
 @media (min-width: 768px) {
 }
+
+table.sticky-header {
+    position: relative;
+    border-collapse: collapse;
+}
+
+table.sticky-header thead tr th {
+    position: sticky;
+    top: 0;
+    background-color: white;
+    border-top: none;
+}
