@@ -3,30 +3,36 @@
 
 <Modal @ref="modalRef">
     <ModalBackdrop />
-    <ModalContent>
+    <ModalContent Centered>
         <ModalHeader>
             <ModalTitle>Weather Forecast Filter</ModalTitle>
             <CloseButton Clicked="Dismiss" />
         </ModalHeader>
         <ModalBody>
             <Validations @ref="Validations" Mode="ValidationMode">
-                <Field>
-                    <FieldLabel>Weather Forecast ID</FieldLabel>
-                    <FieldBody>
-                        <Validation>
+                <Validation Validator="async e => await ValidateFieldAsync(e, nameof(GetWeatherForecast.Query.WeatherForecastId))">
+                    <Field Horizontal>
+                        <FieldLabel ColumnSize="ColumnSize.Is2">ID</FieldLabel>
+                        <FieldBody ColumnSize="ColumnSize.Is10">
                             <NumericEdit @bind-Value="Query.WeatherForecastId">
                                 <Feedback>
                                     <ValidationError />
                                 </Feedback>
                             </NumericEdit>
-                        </Validation>
+                        </FieldBody>
+                    </Field>
+                </Validation>
+                <Field Horizontal>
+                    <FieldLabel ColumnSize="ColumnSize.Is2">Summary</FieldLabel>
+                    <FieldBody ColumnSize="ColumnSize.Is10">
+                        <TextEdit @bind-Text="Query.Summary" />
                     </FieldBody>
-                </Field>
+                    </Field>
             </Validations>
         </ModalBody>
         <ModalFooter>
             <Button Color="Color.Secondary" Clicked="ClearFilters">Clear Filters</Button>
-            <Button Color="Color.Primary" Clicked="Close">Filter</Button>
+            <Button Color="Color.Primary" Clicked="Close"><Icon Name="@("fa fa-filter")" /> Filter</Button>
         </ModalFooter>
     </ModalContent>
 </Modal>
@@ -66,7 +72,7 @@
         modalRef.Show();
     }
 
-    private async Task ValidateField(ValidatorEventArgs args, string fieldName)
+    private async Task ValidateFieldAsync(ValidatorEventArgs args, string fieldName)
     {
         var validationResult = await Validator.ValidateAsync(Query, default, fieldName);
         if (!validationResult.IsValid)

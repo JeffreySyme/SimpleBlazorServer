@@ -35,12 +35,14 @@ namespace SimpleBlazorServer.Queries.WeatherForecast
                 };
             }
 
-            private async Task<IEnumerable<WeatherForecast>> BuildQueryAsync(Query request) 
+            private async Task<IEnumerable<WeatherForecast>> BuildQueryAsync(Query request)
             {
                 var query = await GetForecastAsync(DateTime.Now);
 
                 if (request.WeatherForecastId.HasValue)
                     query = query.Where(x => x.WeatherForecastId == request.WeatherForecastId);
+                if (!string.IsNullOrEmpty(request.Summary))
+                    query = query.Where(x => x.Summary.ToLower().Contains(request.Summary.ToLower().Trim()));
 
                 return query;
             }
