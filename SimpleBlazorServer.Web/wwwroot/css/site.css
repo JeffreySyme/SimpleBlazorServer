@@ -53,6 +53,7 @@ html, body {
 
 ::-webkit-scrollbar {
     width: 10px;
+    height: 10px;
 }
 
 /* Track */
@@ -76,16 +77,20 @@ html, body {
 @media (min-width: 768px) {
 }
 
-table.sticky-header {
+table.app-table {
     position: relative;
     border-collapse: collapse;
 }
 
-table.sticky-header thead tr th {
+table.app-table thead tr th {
     position: sticky;
     top: 0;
     background-color: white;
     border-top: none;
+}
+
+table.app-table th, td {
+    min-width: 200px;
 }
 
 .app-layout {
