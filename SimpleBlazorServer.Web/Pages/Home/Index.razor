@@ -8,3 +8,11 @@
         Welcome to your new app.
     </AppLayoutBody>
 </AppLayout>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await Document.SetTitleAsync("Simple Blazor Server - Home");
+    }
+}
