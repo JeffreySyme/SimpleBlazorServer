@@ -1,6 +1,6 @@
 ﻿@page "/counter"
 @inject IValidator<IncrementCounter.Command> Validator
-@inject ISnackbarService SnackbarService
+@inject ISnackbarService Snackbar
 
 <style>
     .counter-body {
@@ -23,6 +23,12 @@
 @code {
     private int currentCount = 0;
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await Document.SetTitleAsync("Simple Blazor Server - Counter");
+    }
+
     private async void IncrementCount()
     {
         var command = new IncrementCounter.Command
@@ -34,7 +40,7 @@
 
         if (!validationResult.IsValid)
         {
-            SnackbarService.Show("The counter valus is invalid");
+            Snackbar.Show("The counter value is invalid");
             return;
         }
 

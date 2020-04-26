@@ -57,6 +57,14 @@
 
     public GetWeatherForecast.Response Response { get; set; } = new GetWeatherForecast.Response();
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+            await Document.SetTitleAsync("Simple Blazor Server - Weather Forecast");
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
     public void ClearFilters()
     {
         var query = new GetWeatherForecast.Query();
