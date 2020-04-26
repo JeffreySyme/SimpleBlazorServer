@@ -17,6 +17,7 @@ namespace SimpleBlazorServer.Commands.SampleForm
 
                 RuleFor(x => x.Password)
                     .NotEmpty()
+                    .WithMessage("Password is required.")
                     .MinimumLength(6)
                     .WithMessage("Password must be at least 6 characters.")
                     .Matches("[A-Z]")

@@ -1,0 +1,89 @@
+@page "/sample-form"
+@inherits ValidationComponent
+@inject IValidator<CreateItem.Command> Validator
+@inject ISnackbarService Snackbar
+
+<style>
+    .create-item-body {
+        padding: 24px;
+    }
+    .create-item-footer {
+        display: flex;
+        justify-content: flex-end;
+    }
+</style>
+
+<AppLayout>
+    <AppLayoutHeader>
+        <AppLayoutHeading>Sample Form</AppLayoutHeading>
+    </AppLayoutHeader>
+    <AppLayoutBody>
+        <div class="create-item-body">
+            <Validations @ref="Validations" Mode="ValidationMode">
+                <Validation Validator="async e => await ValidateFieldAsync(e, nameof(CreateItem.Command.Email))">
+                    <Field Horizontal>
+                        <FieldLabel ColumnSize="ColumnSize.Is2">Email</FieldLabel>
+                        <FieldBody ColumnSize="ColumnSize.Is10">
+                            <TextEdit @bind-Text="Item.Email" Role="TextRole.Email">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </FieldBody>
+                    </Field>
+                </Validation>
+                <Validation Validator="async e => await ValidateFieldAsync(e, nameof(CreateItem.Command.Password))">
+                    <Field Horizontal>
+                        <FieldLabel ColumnSize="ColumnSize.Is2">Password</FieldLabel>
+                        <FieldBody ColumnSize="ColumnSize.Is10">
+                            <TextEdit @bind-Text="Item.Password" Role="TextRole.Password">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </FieldBody>
+                    </Field>
+                </Validation>
+                <Validation Validator="async e => await ValidateFieldAsync(e, nameof(CreateItem.Command.ConfirmPassword))">
+                    <Field Horizontal>
+                        <FieldLabel ColumnSize="ColumnSize.Is2">Confirm Password</FieldLabel>
+                        <FieldBody ColumnSize="ColumnSize.Is10">
+                            <TextEdit @bind-Text="Item.ConfirmPassword" Role="TextRole.Password">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </FieldBody>
+                    </Field>
+                </Validation>
+            </Validations>
+        </div>
+    </AppLayoutBody>
+    <AppLayoutFooter>
+        <div class="create-item-footer">
+            <Button Color="Color.Primary" Clicked="Save"><Icon Name="@("fa-save")"/> Save</Button>
+        </div>
+    </AppLayoutFooter>
+</AppLayout>
+
+@code {
+    public CreateItem.Command Item { get; set; } = new CreateItem.Command();
+
+    private async Task ValidateFieldAsync(ValidatorEventArgs args, string fieldName)
+    {
+        var validationResult = await Validator.ValidateAsync(Item, default, fieldName);
+
+        SetValidationState(args, validationResult);
+    }
+
+    public void Save()
+    {
+        if (!ValidateAll())
+        {
+            Snackbar.Show("Item could not be saved. Please see validation messages.", SnackbarType.Error);
+            return;
+        }
+
+        Snackbar.Show("Item saved successfully.");
+    }
+}
