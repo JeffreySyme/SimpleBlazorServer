@@ -87,3 +87,48 @@ table.sticky-header thead tr th {
     background-color: white;
     border-top: none;
 }
+
+.app-layout {
+    animation: fade-in 0.2s ease-in;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+}
+
+.app-layout-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    border-bottom: 1px solid gray;
+    padding: 0 24px;
+    align-items: center;
+    align-content: center;
+    height: 70px;
+}
+
+.app-layout-header .app-layout-heading {
+    font-size: 24px;
+}
+
+.app-layout-body {
+    overflow-y: auto;
+}
+
+.app-layout-footer {
+    border-top: 1px solid gray;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: flex-end;
+    height: 70px;
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
