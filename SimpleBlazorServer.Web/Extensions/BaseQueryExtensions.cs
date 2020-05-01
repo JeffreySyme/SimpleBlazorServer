@@ -10,7 +10,7 @@ namespace SimpleBlazorServer.Web.Extensions
 {
     public static class BaseQueryExtensions
     {
-        public static string ToQueryString<T>(this T item) where T : BaseQuery 
+        public static string ToQueryString<T>(this T item) where T : BaseQuery
         {
             var encodedValues = typeof(T)
                 .GetProperties()
@@ -19,7 +19,7 @@ namespace SimpleBlazorServer.Web.Extensions
                 {
                     var propertyType = p.PropertyType;
 
-                    if (propertyType == typeof(int?))
+                    if (propertyType == typeof(int?) || propertyType == typeof(int) || propertyType == typeof(bool?) || propertyType == typeof(bool))
                         return EncodeValue(p, item);
 
                     if (!propertyType.IsGenericType)

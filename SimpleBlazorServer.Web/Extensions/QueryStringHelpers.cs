@@ -32,6 +32,8 @@ namespace SimpleBlazorServer.Web.Extensions
         {
             if (type == typeof(int?) || type == typeof(int))
                 return int.TryParse(stringValues.FirstOrDefault(), out int value) ? (int?)value : null;
+            if (type == typeof(bool?) || type == typeof(bool))
+                return bool.TryParse(stringValues.FirstOrDefault(), out bool value) ? (bool?)value : null;
             if (type == typeof(string))
                 return stringValues.FirstOrDefault();
             if (type.GetGenericTypeDefinition().GetInterfaces().Any(i => i == typeof(IEnumerable)))
